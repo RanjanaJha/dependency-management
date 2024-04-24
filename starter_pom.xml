@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+    <groupId>com.dependency.management</groupId>
+    <artifactId>starter</artifactId>
+    <version>${changelist}-${revision}</version>
+    <name>starter-pom</name>
+    <description>This is an batch pom aka an aggregator pom</description>
+    <packaging>pom</packaging>
+	
+    <profiles>
+        <profile>
+            <id>parent</id>
+            <modules>
+                <module>parent_pom.xml</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>common</id>
+            <modules>
+                <module>common_bom.xml</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>services</id>
+            <modules>
+                <module>hello-world-svc_pom.xml</module>
+            </modules>
+        </profile>
+    </profiles>
+	
+    <repositories>
+        <repository>
+            <id>RemoteRepo</id>
+            <url>link to the remote repo goes here</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+	
+    <pluginRepositories>
+        <pluginRepository>
+            <id>RemoteRepo</id>
+            <url>link to the remote repo goes here</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+	
+	 <build>
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>flatten-maven-plugin</artifactId>
+      <version>1.6.0</version>
+      <configuration>
+        <updatePomFile>true</updatePomFile>
+        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+      </configuration>
+      <executions>
+        <execution>
+          <id>flatten</id>
+          <phase>process-resources</phase>
+          <goals>
+            <goal>flatten</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>flatten.clean</id>
+          <phase>clean</phase>
+          <goals>
+            <goal>clean</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+  </build>
+	
+</project>
