@@ -47,8 +47,7 @@
   </plugins>
   </build>
 	
-    <dependencyManagement>	
-        
+    <dependencyManagement>	       
         <dependencies>
 		<!-- parent pom -->	
 			<dependency>
