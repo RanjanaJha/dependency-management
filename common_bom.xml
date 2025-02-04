@@ -11,52 +11,42 @@
     <packaging>pom</packaging>
 	
     <properties>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
-		<spring-boot.version>3.2.4</spring-boot.version>
+		<spring-boot.version>3.2.5</spring-boot.version>
     </properties>
 	
-	 <build>
-  <plugins>
-    <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>flatten-maven-plugin</artifactId>
-      <version>1.6.0</version>
-      <configuration>
-        <updatePomFile>true</updatePomFile>
-        <flattenMode>resolveCiFriendliesOnly</flattenMode>
-      </configuration>
-      <executions>
-        <execution>
-          <id>flatten</id>
-          <phase>process-resources</phase>
-          <goals>
-            <goal>flatten</goal>
-          </goals>
-        </execution>
-        <execution>
-          <id>flatten.clean</id>
-          <phase>clean</phase>
-          <goals>
-            <goal>clean</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-  </build>
+	<build>
+     <plugins>
+	   	 <plugin>
+      		<groupId>org.codehaus.mojo</groupId>
+      		<artifactId>flatten-maven-plugin</artifactId>
+      		<version>1.6.0</version>
+      		<configuration>
+        		<updatePomFile>true</updatePomFile>
+       			<flattenMode>resolveCiFriendliesOnly</flattenMode>
+      		</configuration>
+      		<executions>
+        		<execution>
+          			<id>flatten</id>
+          			<phase>process-resources</phase>
+          			<goals>
+            		<goal>flatten</goal>
+          			</goals>
+        		</execution>
+        		<execution>
+          			<id>flatten.clean</id>
+          			<phase>clean</phase>
+          			<goals>
+            		<goal>clean</goal>
+          		</goals>
+        		</execution>
+      		</executions>
+    	</plugin>
+  	</plugins>
+   </build>
 	
     <dependencyManagement>	       
         <dependencies>
-		<!-- parent pom -->	
-			<dependency>
-                <groupId>com.dependency.management</groupId>
-                <artifactId>parent</artifactId>
-				<version>${changelist}-${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 		<!-- spring boot starter parent -->
 			<dependency>
                 <groupId>org.springframework.boot</groupId>

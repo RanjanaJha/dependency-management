@@ -5,10 +5,15 @@
 	
     <groupId>com.dependency.management</groupId>
     <artifactId>parent</artifactId>
-    <version>${changelist}-${revision}</version>
+    <!-- Increase the version of the parent pom manually here, whenever parent pom is updated  -->
+    <version>1.0.0.RELEASE</version>
     <name>parent-pom</name>
     <description>parent pom</description>
     <packaging>pom</packaging>
+    
+    <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    </properties>
 	
    <repositories>
         <repository>
@@ -37,55 +42,68 @@
     </pluginRepositories>
 	
     <build>
+    <pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
+        		<groupId>org.springframework.boot</groupId>
+        		<artifactId>spring-boot-maven-plugin</artifactId>          
+        		<executions>
+            		<execution>
+                	<goals>
+                    	<goal>repackage</goal>
+                	</goals>
+            		</execution>
+        		</executions>                        
+      		</plugin>      
             <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.10.0.2594</version>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>8.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>4.0.0.4121</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+         <plugin>
+        	<groupId>org.cyclonedx</groupId>
+        	<artifactId>cyclonedx-maven-plugin</artifactId>
+        	<version>2.8.0</version>
+        	<executions>
+            	<execution>
+                	<phase>package</phase>
+                	<goals>
+                    <goal>makeAggregateBom</goal>
+                	</goals>
+            	</execution>
+        	</executions>
+    	</plugin>
+        <plugin>
+			<groupId>org.owasp</groupId>
+			<artifactId>dependency-check-maven</artifactId>
+			<version>10.0.3</version>
+			<executions>
+			<execution>
+				<goals>
+				<goal>check</goal>
+				</goals>
+			</execution>
+			</executions>
+		</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -98,33 +116,39 @@
                     </archive>
                 </configuration>
             </plugin>
-    <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>flatten-maven-plugin</artifactId>
-      <version>1.6.0</version>
-      <configuration>
-        <updatePomFile>true</updatePomFile>
-        <flattenMode>resolveCiFriendliesOnly</flattenMode>
-     <appendAssemblyId>false</appendAssemblyId>
-      </configuration>
-      <executions>
-        <execution>
-          <id>flatten</id>
-          <phase>process-resources</phase>
-          <goals>
-            <goal>flatten</goal>
-          </goals>
-        </execution>
-        <execution>
-          <id>flatten.clean</id>
-          <phase>clean</phase>
-          <goals>
-            <goal>clean</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
+    	<plugin>
+      		<groupId>org.codehaus.mojo</groupId>
+      		<artifactId>flatten-maven-plugin</artifactId>
+      		<version>1.6.0</version>
+      		<configuration>
+        		<updatePomFile>true</updatePomFile>
+       			<flattenMode>resolveCiFriendliesOnly</flattenMode>
+      		</configuration>
+      		<executions>
+        		<execution>
+          			<id>flatten</id>
+          			<phase>process-resources</phase>
+          			<goals>
+            		<goal>flatten</goal>
+          			</goals>
+        		</execution>
+        		<execution>
+          			<id>flatten.clean</id>
+          			<phase>clean</phase>
+          			<goals>
+            		<goal>clean</goal>
+          		</goals>
+        		</execution>
+      		</executions>
+    	</plugin>    
         </plugins>
-    </build>
+    </pluginManagement>
+    <plugins>
+	   	 <plugin>
+      		<groupId>org.codehaus.mojo</groupId>
+      		<artifactId>flatten-maven-plugin</artifactId>
+    	</plugin>
+  	</plugins>
+   </build>
 	
 </project>
